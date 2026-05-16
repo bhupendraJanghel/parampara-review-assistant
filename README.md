@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Parampara Review Assistant
 
-## Getting Started
+A premium, mobile-first AI review assistant web application designed for Parampara Decor & Events. Built with Next.js 15, Tailwind CSS, Framer Motion, and Google's Gemini API.
 
-First, run the development server:
+## Features
+- **Ultra Modern UI**: Dark mode, gold accents, glassmorphism, and smooth Framer Motion animations.
+- **Mobile First**: Built specifically to feel like a high-end iOS application.
+- **AI-Powered**: Uses Gemini to transform rough feedback into polished, human-sounding reviews.
+- **Multiple Tones**: Choose between Luxury, Professional, Emotional, or Simple tones.
+- **One-Click Copy**: Easily copy the generated review to clipboard.
+- **Google Integration**: Direct link to post the review on Google.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech Stack
+- Next.js 15 (App Router)
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Lucide React (Icons)
+- Google Gen AI SDK
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup & Run
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Environment Variables**:
+   Create a `.env.local` file in the root directory and add your Gemini API key:
+   ```env
+   GEMINI_API_KEY="your-api-key-here"
+   ```
 
-## Learn More
+3. **Run Development Server**:
+   ```bash
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. **Production Build**:
+   ```bash
+   npm run build
+   npm start
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Customization
+- To update the Google Review link, edit `src/app/page.tsx` and change the URL in the `handlePostOnGoogle` function.
+- Colors and typography can be customized in `src/app/globals.css` and `tailwind.config.ts`.

@@ -28,7 +28,7 @@ export function GeneratedReview({
   isGenerating
 }: GeneratedReviewProps) {
   const handlePostOnGoogle = () => {
-    window.open("https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID", "_blank");
+    window.open("https://g.page/r/CTSHEWU8fEqNEBk/review", "_blank");
   };
 
   return (

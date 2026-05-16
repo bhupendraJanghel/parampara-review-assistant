@@ -15,7 +15,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           <div className="absolute inset-0 bg-gold-500/20 blur-[50px] rounded-full" />
           <div className="w-28 h-28 flex items-center justify-center relative z-10 overflow-hidden rounded-full">
             <img
-              src="/images/logo.png"
+              src="/images/parampara-logo.png"
               alt="Parampara Logo"
               className="w-full h-full object-cover"
               onError={(e) => {

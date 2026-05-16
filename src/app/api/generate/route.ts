@@ -24,7 +24,8 @@ Style Guidelines:
 - Keep it very brief: Exactly 2-3 short sentences.
 - Make it sound like a real human wrote it on their phone, not a professional writer.
 - Avoid big words or "marketing" language.
-- If 'Luxury', mention quality. If 'Emotional', mention happiness. If 'Simple', just be direct.
+- If Tone is 'Hinglish', mix Hindi and English naturally (e.g., "Decor bohot sundar tha", "Service was very fast and accurate").
+- If 'Emotional', mention happiness. If 'Simple', just be direct.
 - No quotes. Just the text.`;
 
     const response = await ai.models.generateContent({

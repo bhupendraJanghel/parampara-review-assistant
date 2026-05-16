@@ -47,80 +47,82 @@ export function GeneratedReview({
         </div>
       </div>
 
-      <div className="space-y-6 flex-1 flex flex-col">
-        <div className="space-y-2">
-          <h2 className="text-3xl font-bold tracking-tight text-white leading-tight">
-            Your Review
-            <br />
-            is Ready!
-          </h2>
-          <p className="text-gray-400 text-sm">
-            Choose a tone that fits your style.
-          </p>
-        </div>
-
-        {/* Tone Selection */}
-        <div className="flex flex-wrap gap-2">
-          {(["Professional", "Emotional", "Hinglish", "Simple"] as Tone[]).map((t) => (
-            <button
-              key={t}
-              onClick={() => {
-                setTone(t);
-                onGenerate();
-              }}
-              className={cn(
-                "px-4 py-2 rounded-full border transition-all active:scale-95 text-xs font-semibold",
-                tone === t
-                  ? "bg-gold-500 border-gold-500 text-brand-dark shadow-[0_0_15px_rgba(231,184,92,0.4)]"
-                  : "border-gold-500/20 bg-gold-500/5 text-gold-400 hover:bg-gold-500/10"
-              )}
-            >
-              {t}
-            </button>
-          ))}
-        </div>
-
-        <div className="relative group min-h-[180px]">
-          <div className="absolute inset-0 bg-gold-500/10 blur-[40px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <div className={cn(
-            "relative h-full glass-card rounded-3xl p-6 border border-white/10 transition-all duration-300",
-            isGenerating && "opacity-50"
-          )}>
-            {isGenerating && (
-              <div className="absolute inset-0 flex items-center justify-center z-20">
-                <div className="w-8 h-8 border-2 border-gold-500 border-t-transparent rounded-full animate-spin" />
-              </div>
-            )}
-            
-            <div className="flex items-center gap-1 mb-4">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Star key={i} className="w-4 h-4 text-gold-500 fill-current" />
-              ))}
-            </div>
-
-            <p className="text-white/90 text-lg leading-relaxed font-medium">
-              {generatedReview}
+      <div className="flex-1 flex flex-col min-h-0">
+        <div className="space-y-6 flex-1 overflow-y-auto pr-2 -mr-2 py-2">
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold tracking-tight text-white leading-tight">
+              Your Review
+              <br />
+              is Ready!
+            </h2>
+            <p className="text-gray-400 text-sm">
+              Choose a tone that fits your style.
             </p>
+          </div>
 
-            <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/5">
-              <span className="text-[10px] font-medium text-white/40 uppercase tracking-widest">
-                AI Generated Review
-              </span>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => onGenerate()}
-                  disabled={isGenerating}
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 text-white/80 text-sm font-medium hover:bg-white/10 transition-colors active:scale-95 disabled:opacity-50"
-                >
-                  <RefreshCw className={cn("w-4 h-4", isGenerating && "animate-spin")} />
-                  Refresh
-                </button>
+          {/* Tone Selection */}
+          <div className="flex flex-wrap gap-2">
+            {(["Professional", "Emotional", "Hinglish", "Simple"] as Tone[]).map((t) => (
+              <button
+                key={t}
+                onClick={() => {
+                  setTone(t);
+                  onGenerate();
+                }}
+                className={cn(
+                  "px-4 py-2 rounded-full border transition-all active:scale-95 text-xs font-semibold",
+                  tone === t
+                    ? "bg-gold-500 border-gold-500 text-brand-dark shadow-[0_0_15px_rgba(231,184,92,0.4)]"
+                    : "border-gold-500/20 bg-gold-500/5 text-gold-400 hover:bg-gold-500/10"
+                )}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+
+          <div className="relative group min-h-[180px]">
+            <div className="absolute inset-0 bg-gold-500/10 blur-[40px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className={cn(
+              "relative h-full glass-card rounded-3xl p-6 border border-white/10 transition-all duration-300",
+              isGenerating && "opacity-50"
+            )}>
+              {isGenerating && (
+                <div className="absolute inset-0 flex items-center justify-center z-20">
+                  <div className="w-8 h-8 border-2 border-gold-500 border-t-transparent rounded-full animate-spin" />
+                </div>
+              )}
+              
+              <div className="flex items-center gap-1 mb-4">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <Star key={i} className="w-4 h-4 text-gold-500 fill-current" />
+                ))}
+              </div>
+
+              <p className="text-white/90 text-lg leading-relaxed font-medium">
+                {generatedReview}
+              </p>
+
+              <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/5">
+                <span className="text-[10px] font-medium text-white/40 uppercase tracking-widest">
+                  AI Generated Review
+                </span>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => onGenerate()}
+                    disabled={isGenerating}
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 text-white/80 text-sm font-medium hover:bg-white/10 transition-colors active:scale-95 disabled:opacity-50"
+                  >
+                    <RefreshCw className={cn("w-4 h-4", isGenerating && "animate-spin")} />
+                    Refresh
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mt-auto pb-4">
+        <div className="grid grid-cols-2 gap-4 mt-auto pb-4 pt-4">
           <button
             onClick={onCopy}
             className="bg-white/5 border border-white/10 text-white font-semibold py-4 rounded-2xl flex items-center justify-center gap-2 active:scale-[0.98] transition-transform hover:bg-white/10"

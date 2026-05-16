@@ -9,11 +9,11 @@ interface WelcomeScreenProps {
 
 export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
   return (
-    <div className="flex-1 flex flex-col items-center justify-between p-8 z-10">
-      <div className="flex-1 flex flex-col items-center justify-center space-y-10 w-full mt-12">
+    <div className="flex-1 flex flex-col items-center justify-start pt-16 p-6 z-10 space-y-12">
+      <div className="flex flex-col items-center space-y-6 w-full">
         <div className="relative">
           <div className="absolute inset-0 bg-gold-500/20 blur-[50px] rounded-full" />
-          <div className="w-28 h-28 flex items-center justify-center relative z-10 overflow-hidden rounded-full">
+          <div className="w-44 h-44 flex items-center justify-center relative z-10 overflow-hidden rounded-full">
             <img
               src="/images/parampara-logo.png"
               alt="Parampara Logo"
@@ -22,20 +22,20 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
                 e.currentTarget.style.display = 'none';
               }}
             />
-            <span className="absolute inset-0 flex items-center justify-center text-4xl font-serif text-gradient-gold -z-10">P</span>
+            <span className="absolute inset-0 flex items-center justify-center text-6xl font-serif text-gradient-gold -z-10">P</span>
           </div>
         </div>
 
-        <div className="text-center space-y-3">
-          <h2 className="text-sm tracking-[0.3em] text-gold-400 uppercase font-medium">
+        <div className="text-center space-y-2">
+          <h2 className="text-2xl tracking-[0.3em] text-gold-400 uppercase font-medium">
             Parampara
           </h2>
-          <h3 className="text-[10px] tracking-[0.2em] text-gray-500 uppercase">
+          <h3 className="text-[15px] tracking-[0.2em] text-gray-500 uppercase">
             Decor & Events
           </h3>
         </div>
 
-        <div className="text-center space-y-4">
+        <div className="text-center space-y-2">
           <h1 className="text-3xl font-bold tracking-tight">
             Parampara
             <br />
@@ -47,7 +47,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         </div>
       </div>
 
-      <div className="w-full space-y-8 pb-4">
+      <div className="w-full space-y-6 pb-2">
         <button
           onClick={onStart}
           className="w-full bg-gradient-gold text-brand-dark font-semibold text-lg py-4 rounded-2xl flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-[0_4px_20px_rgba(231,184,92,0.25)]"
@@ -56,7 +56,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           <ChevronRight className="w-5 h-5" />
         </button>
 
-        <div className="flex flex-col items-center space-y-3">
+        <div className="flex flex-col items-center space-y-2">
           <span className="text-xs text-gray-500 font-medium">Trusted by 500+ Happy Clients</span>
           <div className="flex items-center gap-4">
             <div className="flex -space-x-3">

@@ -53,7 +53,7 @@ export function ReviewFlow() {
   };
 
   return (
-    <div className="flex-1 flex flex-col relative max-w-md mx-auto w-full h-[100dvh] overflow-y-auto bg-brand-black">
+    <div className="flex-1 flex flex-col relative max-w-md mx-auto w-full h-[100dvh] overflow-hidden bg-brand-black">
       {/* Background gradients */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-gold-500/10 blur-[100px]" />
@@ -81,7 +81,7 @@ export function ReviewFlow() {
             initial="initial"
             animate="animate"
             exit="exit"
-            className="flex-1 flex flex-col"
+            className="flex-1 flex flex-col overflow-y-auto"
           >
             <FeedbackInput
               feedback={feedback}
@@ -100,7 +100,7 @@ export function ReviewFlow() {
             initial="initial"
             animate="animate"
             exit="exit"
-            className="flex-1 flex flex-col"
+            className="flex-1 flex flex-col overflow-y-auto"
           >
             <GeneratedReview
               generatedReview={generatedReview}

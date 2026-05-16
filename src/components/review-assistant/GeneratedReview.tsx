@@ -47,8 +47,8 @@ export function GeneratedReview({
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col min-h-0">
-        <div className="space-y-6 flex-1 overflow-y-auto pr-2 -mr-2 py-2">
+      <div className="flex flex-col">
+        <div className="space-y-6 pr-2 -mr-2 py-2">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tight text-white leading-tight">
               Your Review
@@ -92,7 +92,7 @@ export function GeneratedReview({
                   <div className="w-8 h-8 border-2 border-gold-500 border-t-transparent rounded-full animate-spin" />
                 </div>
               )}
-              
+
               <div className="flex items-center gap-1 mb-4">
                 {[1, 2, 3, 4, 5].map((i) => (
                   <Star key={i} className="w-4 h-4 text-gold-500 fill-current" />
@@ -122,7 +122,7 @@ export function GeneratedReview({
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mt-auto pb-4 pt-4">
+        <div className="grid grid-cols-2 gap-4 pb-6 pt-4">
           <button
             onClick={onCopy}
             className="bg-white/5 border border-white/10 text-white font-semibold py-4 rounded-2xl flex items-center justify-center gap-2 active:scale-[0.98] transition-transform hover:bg-white/10"

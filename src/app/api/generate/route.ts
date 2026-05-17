@@ -41,8 +41,32 @@ Style Guidelines:
     const generatedText = response.text || "";
 
     return NextResponse.json({ review: generatedText.trim() });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error generating review:", error);
+
+    const isRateLimit = error?.status === 429 || error?.message?.includes("429");
+    if (isRateLimit) {
+      let waitTime = 60; // Default to 60 seconds
+      try {
+        const errorData = JSON.parse(error.message);
+        const errorMessage = errorData?.error?.message?.toLowerCase() || "";
+        const match = errorMessage.match(/wait (\d+) (second|minute|hour)/) || errorMessage.match(/try again in (\d+) (second|minute|hour)/);
+        if (match) {
+          const amount = parseInt(match[1], 10);
+          const unit = match[2];
+          if (unit === 'minute') waitTime = amount * 60;
+          else if (unit === 'hour') waitTime = amount * 3600;
+          else waitTime = amount;
+        }
+      } catch (e) {
+        // Ignored
+      }
+      return NextResponse.json(
+        { error: "Usage limit exceeded.", waitTime },
+        { status: 429 }
+      );
+    }
+
     return NextResponse.json(
       { error: "Failed to generate review" },
       { status: 500 }

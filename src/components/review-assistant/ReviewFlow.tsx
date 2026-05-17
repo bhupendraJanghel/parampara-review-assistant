@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
+import { AlertCircle } from "lucide-react";
 import { WelcomeScreen } from "./WelcomeScreen";
 import { FeedbackInput } from "./FeedbackInput";
 import { GeneratedReview } from "./GeneratedReview";
@@ -16,10 +17,12 @@ export function ReviewFlow() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [copied, setCopied] = useState(false);
   const [tone, setTone] = useState<Tone>("Simple");
+  const [error, setError] = useState<string | null>(null);
 
   const handleGenerate = async () => {
     if (!feedback.trim()) return;
     setIsGenerating(true);
+    setError(null);
 
     try {
       const response = await fetch("/api/generate", {
@@ -29,12 +32,25 @@ export function ReviewFlow() {
       });
 
       const data = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 429) {
+          setError(`Usage limit exceeded. Please wait ${data.waitTime || 60} seconds.`);
+        } else {
+          setError(data.error || "Failed to generate review");
+        }
+        setTimeout(() => setError(null), 5000);
+        return;
+      }
+
       if (data.review) {
         setGeneratedReview(data.review);
         setStep("GENERATED");
       }
-    } catch (error) {
-      console.error("Failed to generate review:", error);
+    } catch (err) {
+      console.error("Failed to generate review:", err);
+      setError("Failed to connect. Please try again.");
+      setTimeout(() => setError(null), 5000);
     } finally {
       setIsGenerating(false);
     }
@@ -59,6 +75,20 @@ export function ReviewFlow() {
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-gold-500/10 blur-[100px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-gold-700/10 blur-[100px]" />
       </div>
+
+      <AnimatePresence>
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-4 left-4 right-4 z-50 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium backdrop-blur-md flex items-start gap-3 shadow-lg"
+          >
+            <AlertCircle className="w-5 h-5 shrink-0" />
+            <p>{error}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence mode="wait">
         {step === "WELCOME" && (

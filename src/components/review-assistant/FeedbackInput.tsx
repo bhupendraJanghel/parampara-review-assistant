@@ -28,25 +28,26 @@ export function FeedbackInput({
     "Wedding",
     "Birthday",
     "Engagement",
+    "Anniversary",
     "Baby Shower",
-    "Shopping",
+    "Decor Items",
     "Festive Decor",
     "Corporate Event"
   ];
 
   const quickChips = [
-    "Premium Quality",
-    "Affordable",
-    "Best Decor",
-    "Stunning Designs",
-    "Punctual",
-    "Great Team",
-    "Highly Recommended",
+    "Great Quality",
+    "Huge Variety",
+    "Beautiful Setup",
+    "On Time",
+    "Loved the Work",
     "Beautiful Shop",
     "Friendly Staff",
-    "Value for Money",
-    "Timely Delivery",
-    "Exceeded Expectations"
+    "Neat & Clean",
+    "Very Helpful",
+    "Highly Recommend",
+    "Good Prices",
+    "Best in Bhilai"
   ];
 
   const handleChipClick = (chip: string, isService = false) => {
@@ -56,12 +57,12 @@ export function FeedbackInput({
     if (isService) {
       if (selectedService === chip) {
         setSelectedService(null);
-        newFeedback = newFeedback.replace(new RegExp(`^Visited for a ${chipLower}[,.]?\\s*`, 'i'), '');
+        newFeedback = newFeedback.replace(new RegExp(`^Visited for ${chipLower}[,.]?\\s*`, 'i'), '');
       } else {
         if (selectedService) {
-          newFeedback = newFeedback.replace(new RegExp(`^Visited for a ${selectedService.toLowerCase()}`, 'i'), `Visited for a ${chipLower}`);
+          newFeedback = newFeedback.replace(new RegExp(`^Visited for ${selectedService.toLowerCase()}`, 'i'), `Visited for ${chipLower}`);
         } else {
-          newFeedback = newFeedback ? `Visited for a ${chipLower}, ${newFeedback}` : `Visited for a ${chipLower}.`;
+          newFeedback = newFeedback ? `Visited for ${chipLower}, ${newFeedback}` : `Visited for ${chipLower}.`;
         }
         setSelectedService(chip);
       }
@@ -78,7 +79,7 @@ export function FeedbackInput({
         // Add
         setSelectedDetails(prev => [...prev, chip]);
         if (!newFeedback) {
-          newFeedback = `The ${chipLower} was amazing.`;
+          newFeedback = chip;
         } else {
           newFeedback = `${newFeedback}${newFeedback.endsWith('.') ? '' : ','} ${chipLower}`;
         }

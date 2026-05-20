@@ -122,20 +122,26 @@ export function GeneratedReview({
           </div>
         </div>
 
-        <div className="pb-6 pt-4">
+        <div className="grid grid-cols-2 gap-4 pb-6 pt-4">
           <button
-            onClick={handlePostOnGoogle}
-            className="w-full bg-gradient-gold text-brand-dark font-bold py-4 rounded-2xl flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-[0_4px_20px_rgba(231,184,92,0.25)]"
+            onClick={onCopy}
+            className="bg-white/5 border border-white/10 text-white font-semibold py-4 rounded-2xl flex items-center justify-center gap-2 active:scale-[0.98] transition-transform hover:bg-white/10"
           >
             {copied ? (
               <>
-                Copied! Opening Google... <Check className="w-5 h-5" />
+                Copied! <Check className="w-5 h-5 text-green-400" />
               </>
             ) : (
               <>
-                Post Review <Share2 className="w-5 h-5" />
+                Copy Text <Copy className="w-5 h-5" />
               </>
             )}
+          </button>
+          <button
+            onClick={handlePostOnGoogle}
+            className="bg-gradient-gold text-brand-dark font-bold py-4 rounded-2xl flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-[0_4px_20px_rgba(231,184,92,0.25)]"
+          >
+            Post Review <Share2 className="w-5 h-5" />
           </button>
         </div>
       </div>

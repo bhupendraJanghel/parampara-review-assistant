@@ -8,7 +8,54 @@ import { FeedbackInput } from "./FeedbackInput";
 import { GeneratedReview } from "./GeneratedReview";
 
 type Step = "WELCOME" | "INPUT" | "GENERATED";
-type Tone = "Professional" | "Emotional" | "Hinglish" | "Simple";
+type Tone = "Professional" | "Hinglish" | "Hindi" | "Simple";
+
+const checkRateLimit = (): boolean => {
+  if (typeof window === "undefined") return true;
+  try {
+    const now = Date.now();
+    const stored = localStorage.getItem("parampara_generations");
+    if (!stored) return true;
+
+    const data = JSON.parse(stored);
+    const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+
+    if (now - data.date > ONE_DAY_MS) {
+      return true; // Reset window has passed
+    }
+
+    if (data.count >= 5) {
+      return false; // Daily limit reached
+    }
+
+    return true;
+  } catch (e) {
+    return true;
+  }
+};
+
+const recordGeneration = () => {
+  if (typeof window === "undefined") return;
+  try {
+    const now = Date.now();
+    const stored = localStorage.getItem("parampara_generations");
+    if (!stored) {
+      localStorage.setItem("parampara_generations", JSON.stringify({ date: now, count: 1 }));
+      return;
+    }
+
+    const data = JSON.parse(stored);
+    const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+
+    if (now - data.date > ONE_DAY_MS) {
+      localStorage.setItem("parampara_generations", JSON.stringify({ date: now, count: 1 }));
+    } else {
+      localStorage.setItem("parampara_generations", JSON.stringify({ date: data.date, count: data.count + 1 }));
+    }
+  } catch (e) {
+    // Fail-silent
+  }
+};
 
 export function ReviewFlow() {
   const [step, setStep] = useState<Step>("WELCOME");
@@ -19,16 +66,25 @@ export function ReviewFlow() {
   const [tone, setTone] = useState<Tone>("Simple");
   const [error, setError] = useState<string | null>(null);
 
-  const handleGenerate = async () => {
+  const handleGenerate = async (toneOverride?: Tone) => {
     if (!feedback.trim()) return;
+
+    if (!checkRateLimit()) {
+      setError("Daily generation limit reached (3 per day). Thank you for your support!");
+      setTimeout(() => setError(null), 6000);
+      return;
+    }
+
     setIsGenerating(true);
     setError(null);
+
+    const activeTone = typeof toneOverride === "string" ? toneOverride : tone;
 
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ feedback, tone }),
+        body: JSON.stringify({ feedback, tone: activeTone }),
       });
 
       const data = await response.json();
@@ -44,6 +100,7 @@ export function ReviewFlow() {
       }
 
       if (data.review) {
+        recordGeneration();
         setGeneratedReview(data.review);
         setStep("GENERATED");
       }
@@ -136,7 +193,7 @@ export function ReviewFlow() {
               generatedReview={generatedReview}
               tone={tone}
               setTone={setTone}
-              onGenerate={handleGenerate}
+              onGenerate={() => handleGenerate()}
               onBack={() => setStep("INPUT")}
               onCopy={handleCopy}
               copied={copied}

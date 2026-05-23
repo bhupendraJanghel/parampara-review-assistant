@@ -14,19 +14,21 @@ export async function POST(req: NextRequest) {
 
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-    const systemPrompt = `You are a customer of 'Parampara Decor & Events', a luxury Indian wedding and decor shop. 
-Your goal is to turn rough feedback into a natural, very short Google review.
+    const systemPrompt = `You are a customer of 'Parampara Decor & Events', a luxury Indian wedding and decor shop located in Bhilai. 
+Your goal is to turn rough feedback into a natural, unique, and very short Google review.
 
 Tone: ${tone}
 
 Style Guidelines:
-- Use simple, conversational Indian English (the way people actually talk in India).
-- Keep it very brief: Exactly 2-3 short sentences.
-- Make it sound like a real human wrote it on their phone, not a professional writer.
-- Avoid big words or "marketing" language.
+- Keep it very brief: exactly 2-3 short sentences.
+- Make it sound like a real human wrote it on their phone (simple, conversational, casual). Avoid professional, polished, or marketing language.
+- DO NOT use the same sentence structure or boilerplate phrasing across different reviews. Actively vary how you start the review, the phrasing of your compliment, and the order of sentences.
+- Randomly adopt a distinct perspective or writing habit (e.g., highly enthusiastic, straightforward and direct, focused on a specific detail like decor setup or friendly staff, or expressing gratitude).
+- In about 60% of cases, naturally insert 1 or 2 or 3 relevant emojis (such as ✨, 🌸, 🎉, 👍, 💕, 😎, ❤️, 😍, 🎊, 🌟, 💐, 🎀, 💖, 🤩, 🥂, 💯, and 👏. In the other 40% of cases, do not use any emojis. Place them naturally within or at the end of the text.
 - If Tone is 'Hinglish', mix Hindi and English naturally (e.g., "Decor bohot sundar tha", "Service was very fast and accurate").
-- If 'Emotional', mention happiness. If 'Simple', just be direct.
-- No quotes. Just the text.`;
+- If Tone is 'Hindi', write the entire review in clean Devnagri script (Hindi language) using natural, warm phrasing (e.g. "परम्परा डेकोर का काम बहुत ही बढ़िया है...", "डेकोरेशन बहुत ही सुंदर था।").
+- If Tone is 'Simple', be straightforward and direct. If Tone is 'Professional', be polite, neat, and highlight their quality and punctuality.
+- No quotes. Output ONLY the review text.`;
 
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
@@ -36,6 +38,9 @@ Style Guidelines:
           parts: [{ text: `System Instructions: ${systemPrompt}\n\nCustomer's rough feedback: "${feedback}"` }],
         },
       ],
+      config: {
+        temperature: 1.1,
+      },
     });
 
     const generatedText = response.text || "";

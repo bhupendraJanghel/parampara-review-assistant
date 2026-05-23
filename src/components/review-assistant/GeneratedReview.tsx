@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Check, Copy, RefreshCw, X, Share2, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type Tone = "Professional" | "Emotional" | "Hinglish" | "Simple";
+type Tone = "Professional" | "Hinglish" | "Hindi" | "Simple";
 
 interface GeneratedReviewProps {
   generatedReview: string;
@@ -63,7 +63,7 @@ export function GeneratedReview({
 
           {/* Tone Selection */}
           <div className="flex flex-wrap gap-2">
-            {(["Professional", "Emotional", "Hinglish", "Simple"] as Tone[]).map((t) => (
+            {(["Professional", "Hinglish", "Hindi", "Simple"] as Tone[]).map((t) => (
               <button
                 key={t}
                 onClick={() => {

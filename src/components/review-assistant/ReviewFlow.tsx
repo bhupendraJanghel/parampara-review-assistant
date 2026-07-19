@@ -11,6 +11,7 @@ type Step = "WELCOME" | "INPUT" | "GENERATED";
 type Tone = "Professional" | "Hinglish" | "Hindi" | "Simple";
 
 const checkRateLimit = (): boolean => {
+  if (process.env.NODE_ENV === "development") return true;
   if (typeof window === "undefined") return true;
   try {
     const now = Date.now();
@@ -62,9 +63,9 @@ export function ReviewFlow() {
   const [feedback, setFeedback] = useState("");
   const [generatedReview, setGeneratedReview] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [tone, setTone] = useState<Tone>("Simple");
   const [error, setError] = useState<string | null>(null);
+  const [isMock, setIsMock] = useState(false);
 
   const handleGenerate = async (toneOverride?: Tone) => {
     if (!feedback.trim()) return;
@@ -102,6 +103,7 @@ export function ReviewFlow() {
       if (data.review) {
         recordGeneration();
         setGeneratedReview(data.review);
+        setIsMock(!!data.isMock);
         setStep("GENERATED");
       }
     } catch (err) {
@@ -115,8 +117,6 @@ export function ReviewFlow() {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(generatedReview);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   };
 
   const pageVariants: Variants = {
@@ -196,8 +196,8 @@ export function ReviewFlow() {
               onGenerate={() => handleGenerate()}
               onBack={() => setStep("INPUT")}
               onCopy={handleCopy}
-              copied={copied}
               isGenerating={isGenerating}
+              isMock={isMock}
             />
           </motion.div>
         )}
